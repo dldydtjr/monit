@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="monitoringDAO">
+
+	<select id="loadData" parameterType="String" resultType="MonitoringVO">
+		select load_cd, code_nm, isnull(sum(pt_value), 0)
+		from
+		(
+			SELECT load_tm, load_cd_mon2 as load_cd
+					, (select code_nm from TB_CODE tc where CODE_TYPE = 'LOAD' and tc.CODE_CD = load_cd_mon2) as code_nm
+			FROM TB_LOAD tl
+		) a left outer join
+		(
+			select CONVERT(CHAR(13), hist_date, 21)+':00' as hist_date, sum(pt_value) as pt_value
+			from TB_HISTDATA th
+			where hist_id = 1 and chn_id = 1 and ctrl_id = 1 and pt_num = 1 and pt_type = 1
+			and hist_date BETWEEN '2023-02-09 00:00:00' and '2023-02-09 23:59:00'
+			group by CONVERT(CHAR(13), hist_date, 21)
+		) b on a.load_tm = RIGHT(b.hist_date, 5)
+		group by load_cd, code_nm	
+	</select>
+	
+	<select id="selectData" parameterType="String" resultType="MonitoringVO">
+<!-- 		select mydate, CONVERT(CHAR(5), mydate, 24) as histDate, sum(pt_value) as ptValue -->
+<!-- 		from ( -->
+<!-- 			select DATEADD(MINUTE, DATEDIFF(MINUTE, 0, hist_date) / 15 * 15, 0) as mydate, pt_value -->
+<!-- 			from TB_HISTDATA th -->
+<!-- 			where hist_id = 1 and chn_id = 1 and ctrl_id = 1 and pt_num = 1 and pt_type = 1 -->
+<!-- 			and hist_date BETWEEN '2023-02-09 00:00:00' and '2023-02-09 23:59:00' -->
+<!-- 		) a -->
+<!-- 		group by mydate -->
+<!-- 		order by mydate	 -->
+		select CONVERT(CHAR(2), mydate, 24) as labels, sum(pt_value) as ptValue
+		from (
+			select DATEADD(HOUR, DATEDIFF(HOUR, 0, hist_date), 0) as mydate, pt_value
+			from TB_HISTDATA th
+			where hist_id = 1 and chn_id = 1 and ctrl_id = 1 and pt_num = 1 and pt_type = 1
+			and hist_date BETWEEN '2023-02-09 00:00:00' and '2023-02-09 23:59:00'
+		) a
+		group by mydate
+		order by mydate
+	</select>
+
+	<select id="selectData_hist" parameterType="String" resultType="MonitoringVO">
+		select labels, labels as histDate, ptValue
+		from (
+			SELECT DISTINCT FORMAT(cast(DATEADD(MINUTE, DATEDIFF(MINUTE, 0, hist_date) / 5 * 5, 0) as datetime), 'yyyy-MM-dd HH:mm') as labels
+				, sum(pt_value) over(partition by DATEDIFF(MINUTE, 0, hist_date) / 5) as ptValue
+			FROM ${tableName}
+			where hist_id = 1 and chn_id = 9 and ctrl_id = 1 and pt_num = 21 and pt_type = 0 
+			and convert(char(10), hist_date, 23) between #{stDate} and #{edDate}
+			GROUP BY pt_value, DATEDIFF(MINUTE, 0, hist_date) / 5
+		) t
+		order by labels
+	</select>
+
+	<select id="selectData_hist15" parameterType="String" resultType="MonitoringVO">
+		select labels, labels as histDate, ptValue
+		from (
+			SELECT DISTINCT FORMAT(cast(DATEADD(MINUTE, DATEDIFF(MINUTE, 0, hist_date) / 15 * 15, 0) as datetime), 'yyyy-MM-dd HH:mm') as labels
+				, sum(pt_value) over(partition by DATEDIFF(MINUTE, 0, dateadd(minute, 0, hist_date)) / 15) as ptValue
+				, count(pt_value) over(partition by DATEDIFF(MINUTE, 0, dateadd(minute, 0, hist_date)) / 15) as cntVal
+			FROM ${tableName}
+			where hist_id = 1 and chn_id = 9 and ctrl_id = 1 and pt_num = 21 and pt_type = 0
+			and convert(char(10), hist_date, 23) between #{stDate} and #{edDate}
+			GROUP BY pt_value, hist_date
+		) t
+		where cntVal = 3
+		order by labels
+	</select>
+	
+	<select id="selectData_hist_hour" parameterType="String" resultType="MonitoringVO">
+		select labels, labels as histDate, ptValue
+		from (
+			SELECT 	FORMAT(cast([hist_date] as datetime), 'yyyy-MM-dd HH:00') as labels
+				, sum(pt_value) over(partition by FORMAT(cast([hist_date] as datetime), 'yyyy-MM-dd HH:00')) as ptValue
+			  FROM ${tableName}
+			  where hist_id = 1 and chn_id = 9 and ctrl_id = 1 and pt_num = 21 and pt_type = 0
+			  and convert(char(10), hist_date, 23) between #{stDate} and #{edDate}
+		) t
+		group by labels, ptValue
+	</select>
+
+	<select id="selectData_hist_day" parameterType="String" resultType="MonitoringVO">
+		select labels, labels as histDate , ptValue
+		from (
+			SELECT 	FORMAT(cast([hist_date] as datetime), 'yyyy-MM-dd') as labels
+				, sum(pt_value) over(partition by FORMAT(cast([hist_date] as datetime), 'yyyy-MM-dd')) as ptValue
+			  FROM ${tableName}
+			  where hist_id = 1 and chn_id = 9 and ctrl_id = 1 and pt_num = 21 and pt_type = 0 
+			  and convert(char(10), hist_date, 23) between #{stDate} and #{edDate}
+  		) t
+		group by labels, ptValue
+	</select>
+
+	<select id="selectData_hist_month" parameterType="String" resultType="MonitoringVO">
+		select labels, labels as histDate , ptValue
+		from (
+			SELECT 	MONTH(cast([hist_date] as datetime)) as labels
+				, sum(pt_value) over(partition by MONTH(cast([hist_date] as datetime))) as ptValue
+			  FROM ${tableName}
+			  where hist_id = 1 and chn_id = 9 and ctrl_id = 1 and pt_num = 21 and pt_type = 0 
+			  and convert(char(10), hist_date, 23) between #{stDate} and #{edDate}
+  		) t
+		group by labels, ptValue
+	</select>
+	
+</mapper>

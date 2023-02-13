@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dashboardDAO">
+
+	<delete id="deleteWeather" parameterType="DashboardVO">
+	</delete>
+
+	<insert id="insertWeather" parameterType="DashboardVO">
+	</insert>
+
+	<select id="getWeather" parameterType="DashboardVO">
+	</select>
+	
+	<select id="getCurrData" parameterType="String" resultType="DashboardVO">
+<!-- 		select stuff(stuff(stuff(stuff(baseDatetime , 5, 0, '-'),8,0, '-'),11,0, ' '),14,2,':') as baseDatetime -->
+		select stuff(stuff(stuff(stuff(stuff(baseDatetime , 5, 0, '-'),8,0, '-'),11,0, ' '),14,0,':'),17,2,'') as baseDatetime
+				,suppAbility
+				,currPwrTot
+				,forecastLoad
+				,operReservePwr
+				,operReserveRate
+				,suppReservePwr
+				,suppReserveRate
+		from TB_SUKUB_CURR
+	</select>
+	
+	<select id="getData" parameterType="String" resultType="DashboardVO">
+		select FORMAT(cast(baseDatetime as datetime), 'HH:mm') as baseDatetime, currPwrTot
+		from (
+			select cast(stuff(stuff(stuff(baseDatetime , 9, 0, ' '), 12, 0, ':'), 15, 0, ':') as datetime) as baseDatetime, currPwrTot
+			from ${tableName}
+		) a
+		where baseDatetime >= cast(#{searchDate} as date)
+	</select>
+
+</mapper>

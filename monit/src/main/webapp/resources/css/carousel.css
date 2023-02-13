@@ -1,0 +1,29 @@
+.carousel.carousel-fade .carousel-inner > .item,
+.carousel.carousel-fade .carousel-inner > .item.active {
+    opacity: 0;
+    transition-duration: 1s;
+    transition-property: opacity;
+}
+
+.carousel.carousel-fade .carousel-inner > .item.active,
+.carousel.carousel-fade .carousel-inner > .item-next.item-left,
+.carousel.carousel-fade .carousel-inner > .item-prev.item-right {
+    opacity: 1;
+}
+
+.carousel.carousel-fade .carousel-inner > .active.item-left,
+.carousel.carousel-fade .carousel-inner > .active.item-right {
+    opacity: 0;
+}
+
+.carousel.carousel-fade .carousel-inner > .item-next,
+.carousel.carousel-fade .carousel-inner > .item-prev,
+.carousel.carousel-fade .carousel-inner > .item.active,
+.carousel.carousel-fade .carousel-inner > .active.item-left,
+.carousel.carousel-fade .carousel-inner > .active.item-prev {
+/* 	transform: translateX(0);
+
+    @supports (transform-style: preserve-3d) {
+      transform: translate3d(0, 0, 0);
+    } */
+}

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<typeAliases>
+		<typeAlias type="com.dev.nao.batch.service.BatchVO" alias="BatchVO" />
+		<typeAlias type="com.dev.nao.dashboard.service.DashboardVO" alias="DashboardVO" />
+		<typeAlias type="com.dev.nao.monitoring.service.MonitoringVO" alias="MonitoringVO" />
+
+	</typeAliases>
+</configuration>
