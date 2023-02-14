@@ -15,11 +15,11 @@
 <body>
 <%@ include file="/WEB-INF/views/import/appbar.jsp" %>
 
-<div class="bg-light border py-md-2">
+<div class="bg-light border py-md-1">
 	<%@ include file="/WEB-INF/views/import/sidebars.jsp" %>
-	<main class="col-md-12 ms-md-auto col-lg-10 px-md-3">
-		<div class="row">
-		    <div class="col bg-white border rounded-3 mx-3">
+	<main class="col-md-12 ms-md-auto col-lg-10 px-md-1">
+		<div class="row py-1 dashboard_ml-0" style="width: 100%">
+		    <div class="col bg-white border rounded-3 mx-1">
 		          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-2 border-bottom">
 			        <h1 class="h5">일간 소비전력</h1>
 			      </div>
@@ -48,8 +48,8 @@
 				</div>
 		    </div>
 	    </div>
-   	    <div class="row" style="margin-top: 8px;">
-		    <div class="col bg-white border rounded-3 mx-3">
+   	    <div class="row py-1 dashboard_ml-0" style="width: 100%">
+		    <div class="col bg-white border rounded-3 mx-1">
 				<div class="justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
 				    <div class="btn-toolbar m-2" style="justify-content: center;">
 					    <table class="table table-hover" id="testTbl">
