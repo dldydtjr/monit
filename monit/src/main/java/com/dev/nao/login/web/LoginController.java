@@ -52,7 +52,7 @@ public class LoginController {
 		if(request.getSession().getAttribute("id") == null) {
 			return "login/login";
 		}else {
-			return "redirect:/dashboard";			
+			return "redirect:/integrate";			
 		}
 	}
 	
