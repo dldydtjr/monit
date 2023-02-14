@@ -17,28 +17,29 @@
 <script type="text/javascript">
 
 function login() {
+	window.location.href = '/monit/integrate';
 	
-	var id = jQuery("#id").val(); 
-	var password = jQuery("#password").val(); 
+// 	var id = jQuery("#id").val(); 
+// 	var password = jQuery("#password").val(); 
 	
-    $.ajax({
-		type: "POST",
-		url: "<c:url value='/login'/>",
-		dataType: "json",
-		data : { id: id, password: password },
-		timeout: 10000,
-		success: function(result) {
-			console.log(result);
-			if(result == "0"){
-				window.location.href = '/edms/dashboard';
-			}else{
-				alert("로그인 실패");
-			}
-		},
-		error : function(result) {
+//     $.ajax({
+// 		type: "POST",
+// 		url: "<c:url value='/login'/>",
+// 		dataType: "json",
+// 		data : { id: id, password: password },
+// 		timeout: 10000,
+// 		success: function(result) {
+// 			console.log(result);
+// 			if(result == "0"){
+// 				window.location.href = '/monit/integrate';
+// 			}else{
+// 				alert("로그인 실패");
+// 			}
+// 		},
+// 		error : function(result) {
 			
-		}
-    });
+// 		}
+//     });
 }
 
 </script>
