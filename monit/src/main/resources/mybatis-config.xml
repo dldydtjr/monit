@@ -8,6 +8,7 @@
 		<typeAlias type="com.dev.nao.batch.service.BatchVO" alias="BatchVO" />
 		<typeAlias type="com.dev.nao.dashboard.service.DashboardVO" alias="DashboardVO" />
 		<typeAlias type="com.dev.nao.monitoring.service.MonitoringVO" alias="MonitoringVO" />
+		<typeAlias type="com.dev.nao.statistics.service.StatisticsVO" alias="StatisticsVO" />
 
 	</typeAliases>
 </configuration>

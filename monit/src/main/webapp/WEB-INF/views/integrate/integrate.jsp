@@ -21,32 +21,38 @@
 <body>
 <%@ include file="/WEB-INF/views/import/appbar.jsp" %>
 
-<div class="bg-light border py-md-2">
+<div class="bg-light border py-md-1">
 	<%@ include file="/WEB-INF/views/import/sidebars.jsp" %>
-	<main class="col-md-12 ms-md-auto col-lg-10 px-md-3">
-		<div class="row py-2 dashboard_ml-0" style="width: 100%">
-		    <div class="col bg-white border rounded-3 mx-2  dashboard_row3">
+	<main class="col-md-12 ms-md-auto col-lg-10 px-md-1">
+		<div class="row py-1 dashboard_ml-0" style="width: 100%">
+		    <div class="bg-white border rounded-3 mx-1" style="width: 25%">
 			    <div class="p-4">
 			    	<div>
+			    	현재 소비전력
 			    	</div>
 				</div>
 		    </div>
-		    <div class="col bg-white border rounded-3 mx-2 dashboard_row3">
+		    <div class="col bg-white border rounded-3 mx-1" style="width: 75%">
 			    <div class="p-4">
 			    	<div>
-			    	</div>
-				</div>
-		    </div>
-		    <div class="col bg-white border rounded-3 mx-2 dashboard_row3">
-			    <div class="p-4">
-			    	<div>
+			    	계통도
 			    	</div>
 				</div>
 		    </div>
 	    </div>
-	    <div class="row py-2 dashboard_ml-0" style="width: 100%">
-	    	<div class="col bg-white border rounded-3 mx-2" style="width: 100%">
-			    <div class="p-5">
+	    <div class="row py-1 dashboard_ml-0" style="width: 100%">
+		    <div class="bg-white border rounded-3 mx-1" style="width: 25%">
+			    <div class="p-4">
+			    	<div>
+			    	15분 단위 소비전력 분석
+			    	</div>
+				</div>
+		    </div>
+		    <div class="col bg-white border rounded-3 mx-1" style="width: 75%">
+			    <div class="p-4">
+			    	<div>
+			    	일간 소비전력
+			    	</div>
 				</div>
 		    </div>
 	    </div>

@@ -5,55 +5,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="batchDAO">
 
-	<select id="chk" parameterType="String" resultType="String">
+	<select id="sample" parameterType="String" resultType="String">
 		select baseDatetime
 		from ${tableName}
 		where baseDatetime = #{baseDatetime}
-	</select>
-
-	<insert id="insertData" parameterType="BatchVO" >
-		INSERT INTO ${tableName}
-	           ( [baseDatetime] ,[currPwrTot] )
-	     VALUES ( #{baseDatetime} ,#{currPwrTot} )
-	</insert>
-
-	<delete id="deleteDataCurr" parameterType="BatchVO">
-		DELETE FROM TB_SUKUB_CURR
-	</delete>
-
-	<insert id="insertDataCurr" parameterType="BatchVO" >
-		INSERT INTO TB_SUKUB_CURR 
-		(
-			baseDatetime
-			, suppAbility
-			, currPwrTot
-			, forecastLoad
-			, operReservePwr
-			, operReserveRate
-			, suppReservePwr
-			, suppReserveRate
-		)
-	     VALUES 
-   		(
-			#{baseDatetime}
-			, #{suppAbility}
-			, #{currPwrTot}
-			, #{forecastLoad}
-			, #{operReservePwr}
-			, #{operReserveRate}
-			, #{suppReservePwr}
-			, #{suppReserveRate}
-		)
-	</insert>
-
-	<insert id="makeSukub5mTable">
-		exec SP_MAKE_SUKUB5M_TABLE
-	</insert>
-
-	<select  id="selectTodayData" parameterType="BatchVO" resultType="BatchVO">
-		SELECT baseDatetime
-		from ${tableName}
-		where baseDatetime > CONVERT(CHAR(8), GETDATE() , 112)
 	</select>
 
 </mapper>

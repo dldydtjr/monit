@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="statisticsDAO">
+
+	<select id="selectData" parameterType="String" resultType="StatisticsVO">
+<!-- 		select mydate, CONVERT(CHAR(5), mydate, 24) as histDate, sum(pt_value) as ptValue -->
+<!-- 		from ( -->
+<!-- 			select DATEADD(MINUTE, DATEDIFF(MINUTE, 0, hist_date) / 15 * 15, 0) as mydate, pt_value -->
+<!-- 			from TB_HISTDATA th -->
+<!-- 			where hist_id = 1 and chn_id = 1 and ctrl_id = 1 and pt_num = 1 and pt_type = 1 -->
+<!-- 			and hist_date BETWEEN '2023-02-09 00:00:00' and '2023-02-09 23:59:00' -->
+<!-- 		) a -->
+<!-- 		group by mydate -->
+<!-- 		order by mydate	 -->
+		select CONVERT(CHAR(2), mydate, 24) as labels, sum(pt_value) as ptValue
+		from (
+			select DATEADD(HOUR, DATEDIFF(HOUR, 0, hist_date), 0) as mydate, pt_value
+			from TB_HISTDATA th
+			where hist_id = 1 and chn_id = 1 and ctrl_id = 1 and pt_num = 1 and pt_type = 1
+			and hist_date BETWEEN '2023-02-09 00:00:00' and '2023-02-09 23:59:00'
+		) a
+		group by mydate
+		order by mydate
+	</select>
+	
+</mapper>
