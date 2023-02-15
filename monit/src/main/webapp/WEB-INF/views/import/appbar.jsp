@@ -23,7 +23,36 @@
 	  >
 	    <span class="navbar-toggler-icon"></span>
 	  </button>
-      <div class="text-end"><span class="d-flex align-items-center text-dark text-decoration-none fs-6" >2021-05-03 11시 14분 06초 | 00 00팀 00님</span></div>
+      <div class="text-end">
+      	<span id="clock"></span>
+      </div>
     </header>
 </body>
+<script type="text/javascript">
+function currentTime() {
+	  const date = new Date(); 
+	  let year = date.getFullYear();
+	  let mon = date.getMonth()+1;
+	  let day = date.getDate();
+	  let hh = date.getHours();
+	  let mm = date.getMinutes();
+	  let ss = date.getSeconds();
+
+	  if (hh > 12) {
+	    session = "PM";
+	  }
+
+	  hh = (hh < 10) ? "0" + hh : hh;
+	  mm = (mm < 10) ? "0" + mm : mm;
+	  ss = (ss < 10) ? "0" + ss : ss;
+
+	  const time = year + "-" + (("00"+mon.toString()).slice(-2)) + "-" + day + " " + hh + "시 " + mm + "분 " + ss + "초 | 00 00팀 00님";
+
+	  document.getElementById("clock").innerText = time;
+
+	  setTimeout(() => currentTime(), 1000);
+	}
+
+	currentTime();
+</script>
 </html>

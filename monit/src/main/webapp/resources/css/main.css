@@ -27,6 +27,19 @@ html {
     margin-left: 0;
 }
 
+.search_label {
+	font-weight: bold;
+    font-size: 15px;
+}
+
+.searchDate {
+	width: 100px;
+}
+
+.searchSel {
+	width: 150px;
+}
+
 @media (min-width: 200px) {
 	.source_left {
 		width: 100%;
