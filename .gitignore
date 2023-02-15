@@ -26,8 +26,6 @@ hs_err_pid*
 
 
 
-.classpath
-.project
 .gitignore
 .setting/
 /.metadata/
